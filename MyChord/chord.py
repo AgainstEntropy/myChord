@@ -32,11 +32,11 @@ class Chord:
     def get_cmap(self, colors: list[Union[str, tuple[float]]]):
         return LinearSegmentedColormap.from_list('my_cmap', colors, N=self.divsions)
 
-    def add_curve(self, start_end: Union[tuple[float], ndarray[float]], 
+    def add_curve(self, src_tgt: Union[tuple[float], ndarray[float]], 
                   cmap: CmapLike):
         # polar to cartesian
-        x = np.cos((start_end))
-        y = np.sin((start_end))
+        x = np.cos(src_tgt)
+        y = np.sin(src_tgt)
         xy = self.r * np.stack((x, y), axis=1)
 
         # compute the quadratic Bezier curve
@@ -77,9 +77,9 @@ if __name__ == '__main__':
     graph.remove_curves()
 
     cmap1 = graph.get_cmap(['red', 'blue'])
-    graph.add_curve(start_end=np.array((0, 30)) / 180 * np.pi, cmap=cmap1)
+    graph.add_curve(src_tgt=np.array((0, 30)) / 180 * np.pi, cmap=cmap1)
 
     cmap2 = graph.get_cmap(['green', 'gold'])
-    graph.add_curve(start_end=np.array((-45, 210)) / 180 * np.pi, cmap=cmap2)
+    graph.add_curve(src_tgt=np.array((-45, 210)) / 180 * np.pi, cmap=cmap2)
 
     graph.show()
